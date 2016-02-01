@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Foreca</title>
+    <link href="style.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" href="print.css" type="text/css" media="print"/>
+  </head>
+  <body>
+    <div id="mainContainer">
+      <div id="header">
+        <select id="selector">
+          <option>Spr&aring;k/Language</option>
+          <option>Suomi</option>
+          <option>Ruotsi</option>
+          <option>Englanti</option>
+        </select>
+        <ul id="toplist">
+          <li>
+            <a class="links" href="">Yritys</a>
+          </li>
+          <li id="yritys">
+            <a class="links" href="">Tuotteet ja palvelut</a>
+          </li>
+          <li id="yhteystiedot">
+            <a class="links" href="">Yhteystiedot</a>
+          </li>
+        </ul>
+      </div>
+      <div id="otsikko">
+        <img src="images/foreca_logo.png" alt="Foreca" />
+      </div>
+      <div id="saa">
+        <p id="saateksti">sää</p>
+      </div>
+      <div id="ylapalkki">
+        <p id="paikkahaku">
+        <label id="hakuteksti" for="tekstikentta">
+          Paikkahaku
+        </label> 
+        <input type="text" id="tekstikentta" placeholder="Kirjoita tähän haluamasi paikkakunnan nimi" /> 
+        <input type="submit" value="Haku" /> 
+        <img id="geode" src="images/geode.png" alt="Kuva" /></p>
+      </div>
+      <div id="contentLeft">
+        <h3 id="kaupunki">Jyväskylä</h3>
+        <p id="sijaintiteksti">Näytä sijainti kartalla</p>
+        <h5 class="valikkootsikkovihrea">SÄÄENNUSTEET 
+        <img class="murutvasen" src="images/arrow3.gif" alt="&gt;&gt;" /></h5>
+        <select id="valintaLeft1">
+          <option>Pikavalinta &gt;</option>
+          <option>Suomi</option>
+          <option>Ruotsi</option>
+          <option>Englanti</option>
+        </select>
+        <ul class="valikko">
+          <li>
+            <a href="">Täsmäsää</a>
+          </li>
+          <li>
+            <a href="">10 päivän ennuste</a>
+          </li>
+          <li>
+            <a href="">15 vrk ennuste</a>
+          </li>
+          <li>
+          <a href="">Suomi 1-3 vrk</a> 
+          <a href="" id="oikeavrk">4-6 vrk</a></li>
+        </ul>
+        <h5 class="valikkootsikkovihrea">SADEKARTAT 
+        <img class="murutvasen" src="images/arrow3.gif" alt="&gt;&gt;" /></h5>
+        <ul class="valikko">
+          <li>
+            <a href="">Sadetutka ja -ennuste</a>
+          </li>
+          <li>
+            <a href="">Sateen olomuoto</a>
+          </li>
+          <li>
+            <a href="">Ilmanpaine ja sade</a>
+          </li>
+          <li>
+            <a href="">Sade 3 vrk</a>
+          </li>
+        </ul>
+        <select id="valintaLeft2">
+          <option>Tasmatutka ja salamat</option>
+          <option>Koko maa</option>
+          <option>Helsinki</option>
+          <option>Turku</option>
+        </select>
+        <h5 class="valikkootsikkoharmaa">AJANKOHTAISTA 
+        <img class="murutvasen" src="images/arrow3.gif" alt="&gt;&gt;" /></h5>
+        <ul class="valikko">
+          <li>
+            <a href="">Ajokeliennuste</a>
+          </li>
+          <li>
+            <a href="">Lumen syvyys</a>
+          </li>
+          <li>
+            <a href="">Säävaroitukset</a>
+          </li>
+          <li>
+            <a href="">UV-indeksi</a>
+          </li>
+        </ul>
+        <img id="uutta" src="images/uutta.png" alt="Uutta!" />
+        <h5 class="valikkootsikkotvihrea">HAVAINNOT 
+        <img class="murutvasen" src="images/arrow3.gif" alt="&gt;&gt;" /></h5>
+        <ul class="valikko">
+          <li>
+            <a href="">Jyväskylä</a>
+          </li>
+          <li>
+            <a href="">Suomi-trivia</a>
+          </li>
+          <li>
+            <a href="">Sääkamera</a>
+          </li>
+          <li>
+            <a href="">Pilvihavainnot</a>
+          </li>
+          <li>
+            <a href="">Sateelliitti</a>
+          </li>
+          <li>
+            <a href="">Lumen syvyys</a>
+          </li>
+          <li>
+            <a href="">Siitepölytiedote</a>
+          </li>
+        </ul>
+		<h5 class="valikkootsikkotsini">HIIHTOKESKUKSET
+		  <img class="hiihtaja" src="images/ski.gif" alt="&gt;&gt;" />
+		</h5>
+		<p id="hiihtokeskukset">
+		  Calpis Ski Center, Himos, Häkärinteet, Laajavuori, Messilä, Mielakka, Paavonrinteet, Riihivuori Hiihtokeskus, Sappee, Savivuoren Hiihtokeskus, Soinin Vuorenmaa, Vehmasrinteet
+		</p>
+		<h5 class="valikkootsikkoharmaa">SÄÄN TAKAA -BLOGI
+		  <img class="murutvasen" src="images/arrow3.gif" alt="&gt;&gt;" />
+		  </h5>
+		<p id="blogikentta">
+		  Talvenselän ajan<br> 
+		  itsetutkiskelu<br>
+		  <strong>Aleksi Jokela</strong> 21.1
+		  <img id="naama" src="images/naama.jpg" alt="naama">
+		</p>
+		
+		<h5 class="valikkootsikkoharmaa">LIIKENNETIEDOT
+		  <img class="murutvasen" src="images/arrow3.gif" alt="&gt;&gt;" />
+		</h5>
+		<ul class="valikko">
+          <li>
+            <a href="">Pääkaupunkiseutu</a>
+          </li>
+          <li>
+            <a href="">Etelä-Suomi</a>
+          </li>
+          <li>
+            <a href="">Keski-Suomi</a>
+          </li>
+        </ul>
+		
+		<h5 class="valikkootsikkoharmaa">MTV.fi SÄÄ
+		  <img class="murutvasen" src="images/arrow3.gif" alt="&gt;&gt;" />
+		</h5>
+		<ul class="valikko">
+          <li>
+            <a href="">Sääennustevideot</a>
+          </li>
+        </ul>
+		<h5 class="valikkootsikkotsini">VENEILYSÄÄ
+		  <img class="vene" src="images/vene.gif" alt="&gt;&gt;" />
+		</h5>
+		<ul class="valikko" id="venelista">
+          <li>
+            <a href="">Tuuliennuste</a>
+          </li>
+          <li>
+            <a href="">Tuulihavainnot</a>
+          </li>
+          <li>
+            <a href="">Navigate-aaltoennuste</a>
+          </li>
+		  <li>
+            <a href="">Meriveden lämpötila</a>
+          </li>
+		  <li>
+            <a href="">Meriveden korkeus</a>
+          </li>
+		  <li>
+            <a href="">Salamatutka</a>
+          </li>
+        </ul>
+		
+		<h5 class="valikkootsikkotsini">MERIALUEET
+		  <img class="vene" src="images/vene.gif" alt="&gt;&gt;" />
+		</h5>
+		<ul class="listagradient">
+		  <li>Ruotsi</li>
+		  <li>Brittein saaret</li>
+		  <li>Läntinen Välimeri</li>
+		  <li>Itäinen Välimeri</li>
+		</ul>
+		
+		<h5 class="valikkootsikkovsini">KATSOMASI PAIKAT
+		  <img class="murutvasen" src="images/arrow3.gif" alt="&gt;&gt;" />
+		</h5>
+		<ul class="listagradient2">
+		  <li>Jyväskylä <br>
+		    <img class="katsotuin" src="images/aurinko.png" alt="o">
+			<span id="katsotuinlampo">-25&deg;</span>
+		  </li>
+		  <li>Helsinki<br>
+		    <img class="katsotuin" src="images/aurinko.png" alt="o">
+			<span id="katsotuinlampo2">+25&deg;</span>
+		  </li>
+		</ul>
+		
+		<h5 class="valikkootsikkovsini">KATSOTUIMMAT PAIKAT
+		  <img class="murutvasen" src="images/arrow3.gif" alt="&gt;&gt;" />
+		</h5>
+		<p id="katsotuinMaa">Suomi</p>
+		<ul class="valikkoKatsotuin">
+          <li>
+            <a href="">Helsinki</a>
+          </li>
+          <li>
+            <a href="">Lahti</a>
+          </li>
+          <li>
+            <a href="">Espoo</a>
+          </li>
+		  <li>
+            <a href="">Tampere</a>
+          </li>
+		  <li>
+            <a href="">Vaasa</a>
+          </li>
+        </ul>
+      </div>
+      <div id="contentRight">
+        <div>
+        <p id="top-text">
+        <img src="images/world.gif" alt="world" /> 
+        <img src="images/arrow2.gif" alt="&gt;&gt;" /> 
+        <a href="">Eurooppa</a> 
+        <img src="images/arrow2.gif" alt="&gt;&gt;" /> 
+        <a href="">Suomi</a> 
+        <img src="images/arrow1.gif" alt="&gt;" /> 
+        <a id="vika" href="">Jyväskylä</a> 
+        <a id="omasaa" href="">+ Lisaa omasäähän</a> 
+        <a id="ohjeet" href="">Ohjeet</a></p>
+        <p id="ennustekarttaTeksti">Ennustekartta, Suomi</p>
+        <h2 id="kaupunkiOtsikko">Jyväskylä</h2>
+        <p class="valiotsikko">Täsmäsää&trade;</p>
+		<table id="saaennusteTaulukko">
+			  <tr id="viikonpaivat">
+			  <!-- Vaihda tästä päivät jotka haluat ennusteessa näkyvän -->
+			  <!-- Colspannia voi vaihtaa myös sen mukaan miten tunnit menevät -->
+			    <td colspan="2">Pe</td>
+				<td colspan="4">La</td>
+				<td colspan="4">Su</td>
+				<td colspan="4">Ma</td>
+				<td colspan="4">Ti</td>
+				<td colspan="4">Ke</td>
+			  </tr>
+			  <!-- Tästä voi vaihtaa päivämäärät ja colspannit -->
+			  <tr id="paivamaarat">
+			    <td colspan="2">16.1.</td>  <!-- Vastaa ensimmäistä päivää yllä olevasta taulukosta -->
+				<td colspan="4">17.1.</td>  <!-- Vastaa toista päivää yllä olevasta taulukosta -->
+				<td colspan="4">18.1.</td>  <!-- Vastaa kolmatta päivää yllä olevasta taulukosta -->
+				<td colspan="4">19.1.</td>  <!-- Vastaa neljättä päivää yllä olevasta taulukosta -->
+				<td colspan="4">20.1.</td>  <!-- Vastaa viidettä päivää yllä olevasta taulukosta -->
+				<td colspan="4">21.1.</td>  <!-- Vastaa kuudetta päivää yllä olevasta taulukosta -->
+			  </tr>
+			  <!-- Vaihda tästä kellonajat -->
+			  <tr id="lampotilat">
+			    <td>14</td>
+				<td>20</td>
+				<td>02</td>
+				<td>08</td>
+				<td>14</td>
+				<td>20</td>
+				<td>02</td>
+				<td>08</td>
+				<td>14</td>
+				<td>20</td>
+				<td>02</td>
+				<td>08</td>
+				<td>14</td>
+				<td>20</td>
+				<td>02</td>
+				<td>08</td>
+				<td>14</td>
+				<td>20</td>
+				<td>02</td>
+				<td>08</td>
+				<td>14</td>
+				<td>20</td>
+			  </tr>
+			  <!-- Ennustekuvia voi vaihtaa tästä (Vastaa samoja tunteja samassa järjestyksessä kuin yllä) -->
+			  <tr id="ennustekuvat">
+			    <td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+				<td><img src="images/sadepilvi.png" alt="kuva"></td>
+			  </tr>
+			  <tr>
+			  <!-- Graafikuvan vaihto -->
+			    <td colspan="22"><img id="ennustekuva" src="images/meteogram2.png" alt="Saaennustekartta" /></td>
+			  </tr>
+			  <!-- Tuulensuunnat voi vaihtaa tästä -->
+			  <tr id="tuulensuunnat">
+			    <td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+				<td><img src="images/tuulensuunta.png" alt="tuuli">3</td>
+			  </tr>
+			</table>
+         
+        <img id="sade" src="images/sade.png" alt="sade" /></div>
+        <div id="contentalaosa">
+          <div id="alaosavasen">
+            <p class="valiotsikko">Viimeisimmät havainnot</p>
+            <p class="infotxt">Havaintoasema: 
+            <select id="kaupunkiselect">
+              <option>Jyvaskyla</option>
+              <option>Suomi</option>
+              <option>Ruotsi</option>
+              <option>Englanti</option>
+            </select></p>
+            <div id="contentalaosaleft">
+              <img id="symboli" src="images/symboli.png" alt="symboli" />
+              <p id="lampotila">+20 &deg;C
+              <br />
+              <img src="images/tuuli.gif" alt="tuuli" /> 
+              <span id="tuulennopeus">3 m/s</span></p>
+              <p class="infotxt">Havaintoaika: 
+              <strong>18.1. 21.20</strong>
+              <br />
+              <a id="eria" href="">Katso havaintohistoria</a> 
+              <img id="kuva" src="images/arrow1.gif" alt="&gt;" /></p>
+            </div>
+            <div id="contentalaosaright">
+              <p class="infotxt">Pilvistä ja poutaa
+              <br />Tuntuu kuin: 
+              <strong>-6°</strong>
+              <br />Ilmanpaine: 
+              <strong>1009.3 hPa</strong>
+              <br />Kastepiste: 
+              <strong>-5°</strong>
+              <br />Suht. kosteus: 
+              <strong>85%</strong>
+              <br />Näkyvyys: 
+              <strong>20 km</strong>
+              <br />Lumen syvyys: 
+              <strong>32 cm</strong>
+              <br />
+              <br />Aurinko nousee: 
+              <strong>09.19</strong>
+              <br />Aurinko laskee: 
+              <strong>15.37</strong>
+              <br />Päivän pituus: 
+              <strong>6 h 18 min</strong></p>
+            </div>
+          </div>
+          <div id="alaosaoikea">
+            <p class="valiotsikko">3 päivan ennuste</p>
+			<table id="taulukko3paivaa">
+			  <tr id="pvekarivi3">
+			    <td class="paiva3">Tänään</td>
+		        <td class="paiva3">Huomenna</td>
+		        <td class="paiva3">Keskiviikkona</td>
+			  </tr>
+			  <tr id="pvtokarivi3">
+			    <td><img src="images/symbolipikku.png" alt="symboli1"></td>
+		        <td><img src="images/symbolipikku.png" alt="symboli2"></td>
+		        <td><img src="images/symbolipikku.png" alt="symboli3"></td>
+			  </tr>
+			  <tr id="pvkolmasrivi3">
+			    <td>Ylin:<strong>+15&deg;</strong></td>
+				<td>Ylin:<strong>+15&deg;</strong></td>
+				<td>Ylin:<strong>+15&deg;</strong></td>
+			  </tr>
+			  <tr id="neljasrivi4">
+			    <td>Alin:<strong>+15&deg;</strong></td>
+				<td>Alin:<strong>+15&deg;</strong></td>
+				<td>Alin:<strong>+15&deg;</strong></td>
+			  </tr>
+			  <tr id="paivanennuste10">
+			    <td colspan="3"><a href="">10 päivän ennuste</a> <img src="images/arrow1.gif" alt=">"></td>
+			  </tr>
+			  <tr>
+			    <td id="paivitystieto" colspan="3">Päivitetty 20.1 20:31 <img src="images/forecasmall.gif" alt="Foreca"></td>
+			  </tr>
+			</table>
+          </div>
+          <div id="contentalaosaoikeaalempi">
+            <table class="taulukko">
+              <tr>
+                <th class="valiotsikko" colspan="3">Maailman sää juuri nyt</th>
+              </tr>
+              <tr>
+                <th class="otsikko2" colspan="3">Kuumimpia paikkoja</th>
+              </tr>
+              <tr>
+                <td class="tdeka">
+                  <img src="images/aurinko.png" alt="o" />
+                </td>
+                <td class="tdtoka">+41°</td>
+                <td class="tdkolmas">
+                <a href="">Upington</a>, Etelä-Afrikka</td>
+              </tr>
+              <tr>
+                <td class="tdeka">
+                  <img src="images/aurinko.png" alt="o" />
+                </td>
+                <td class="tdtoka">+34°</td>
+                <td class="tdkolmas">
+                <a href="">Ponda</a>, Intia</td>
+              </tr>
+              <tr>
+                <td class="tdeka">
+                  <img src="images/aurinko.png" alt="o" />
+                </td>
+                <td class="tdtoka">+34°</td>
+                <td class="tdkolmas">
+                <a href="">Kalgoorlie</a>, Australia</td>
+              </tr>
+              <tr>
+                <th class="otsikko2" colspan="3">Kylmimpiä paikkoja</th>
+              </tr>
+              <tr>
+                <td class="tdeka">
+                  <img src="images/kuu.png" alt="o" />
+                </td>
+                <td class="tdtoka2">+41°</td>
+                <td class="tdkolmas">
+                <a href="">Upington</a>, Etelä-Afrikka</td>
+              </tr>
+              <tr>
+                <td class="tdeka">
+                  <img src="images/kuu.png" alt="o" />
+                </td>
+                <td class="tdtoka2">+34°</td>
+                <td class="tdkolmas">
+                <a href="">Ponda</a>, Intia</td>
+              </tr>
+              <tr>
+                <td class="tdeka">
+                  <img src="images/kuu.png" alt="o" />
+                </td>
+                <td class="tdtoka2">+34°</td>
+                <td class="tdkolmas">
+                <a href="">Kalgoorlie</a>, Australia</td>
+              </tr>
+            </table>
+          </div>
+          <div id="contentalaosavasenalempi">
+            <table class="taulukko">
+              <tr>
+                <th class="valiotsikko" colspan="2">Suomen sää juuri nyt</th>
+              </tr>
+              <tr>
+                <th class="otsikko2" colspan="2">Lämpimintä klo 13:30</th>
+              </tr>
+              <tr>
+			    <td id="korkeinlampo">+1.0&deg;C</td>
+				<td id="korkeinkaupunki"><a href="">Hanko, Tulliniemi</a></td>
+              </tr>
+			  <tr>
+                <th class="otsikko2" colspan="2">Kylmintä klo 13:30</th>
+              </tr>
+              <tr>
+			    <td id="alinlampo">-13.0&deg;C</td>
+				<td id="alinkaupunki"><a href="">Kilpisjärvi</a></td>
+              </tr>
+			  <tr>
+                <th class="otsikko2" colspan="2">Tuulisinta klo 13:30</th>
+              </tr>
+			  <tr>
+			    <td id="korkeintuuli"><img id="pikkutuuli" src="images/tuuli2.gif" alt="<-"> 14,4 m/s</td>
+				<td><a href="">Kilpisjärvi</a></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+		<div id="omasaa1">
+		<div id="omasaa2">
+		  <p class="omasaap">Omasää</p>
+		  <p class="omasaap"><a href="">Lisää Jyväskylä <br>
+		     Omasäähän</a>
+			 </p>
+		  </div>
+		</div>
+      </div>
+	  
+    </div>
+	<div id="footer">
+	  <div id="divsisa">
+	  <div class="divsisa1">
+	   <p class="footerotsikko">FORECA.FI</p>
+	   <ul class="footervalikko">
+          <li>
+            <a href="">Ohjeet</a>
+          </li>
+          <li>
+            <a href="">Sään takaa -blogi</a>
+          </li>
+          <li>
+            <a href="">Lähetä palautetta</a>
+          </li>
+          <li>
+            <a href="">Yksityisyyden suoja</a>
+          </li>
+		  <li>
+            <a href="">Mainosmyynti</a>
+          </li>
+        </ul>
+		<p class="footerotsikko">FORECA OY</p>
+	    <ul class="footervalikko">
+          <li>
+            <a href="">Yritys</a>
+          </li>
+          <li>
+            <a href="">Yhteystiedot</a>
+          </li>
+          <li>
+            <a href="">Forecan Meteorologi</a>
+          </li>
+          <li>
+            <a href="">Tuotteet ammattikäyttöön</a>
+          </li>
+		  <li>
+            <a href="">Mediatuotteet</a>
+          </li>
+         </ul>
+		 </div>
+		 <div class="divsisa1">
+		   <p class="footerotsikko">SÄÄENNUSTEET</p>
+	   <ul class="footervalikko">
+          <li>
+            <a href="">Sade-ennuste</a>
+          </li>
+          <li>
+            <a href="">Sateen olomuoto</a>
+          </li>
+          <li>
+            <a href="">Ilmanpaine</a>
+          </li>
+          <li>
+            <a href="">UV-indeksi</a>
+          </li>
+		  <li>
+            <a href="">Lämpötila</a>
+          </li>
+		  <li>
+            <a href="">Pilvisyys</a>
+          </li>
+		  <li>
+            <a href="">Symbolikartta</a>
+          </li>
+		  <li>
+            <a href="">Ajokeliennuste</a>
+          </li>
+        </ul>
+		<p class="footerotsikko">VENEILYSÄÄ</p>
+	    <ul class="footervalikko">
+          <li>
+            <a href="">Tuuliennuste</a>
+          </li>
+          <li>
+            <a href="">Tuulihavainnot</a>
+          </li>
+          <li>
+            <a href="">Aallonkorkeus</a>
+          </li>
+          <li>
+            <a href="">Meriveden korkeus</a>
+          </li>
+		  <li>
+            <a href="">Salamatutka</a>
+          </li>
+         </ul>
+		 </div>
+		 <div class="divsisa1">
+		   <p class="footerotsikko">HAVAINNOT</p>
+	   <ul class="footervalikko">
+          <li>
+            <a href="">Sadetutka</a>
+          </li>
+          <li>
+            <a href="">Satelliitti</a>
+          </li>
+          <li>
+            <a href="">Järvien lämpötila</a>
+          </li>
+          <li>
+            <a href="">Siitepölytiedote</a>
+          </li>
+		  <li>
+            <a href="">Lumen syvyys</a>
+          </li>
+		  <li>
+            <a href="">Sääkamera</a>
+          </li>
+		  <li>
+            <a href="">Suomi-trivia</a>
+          </li>
+        </ul>
+		<p class="footerotsikko">LIIKENNETIEDOT</p>
+	    <ul class="footervalikko">
+          <li>
+            <a href="">Pääkaupunkiseutu</a>
+          </li>
+          <li>
+            <a href="">Etelä-Suomi</a>
+          </li>
+          <li>
+            <a href="">Keski-Suomi</a>
+          </li>
+         </ul>
+		 </div>
+		 <div class="divsisa1">
+		   <p class="footerotsikko">FORECAWEATHER PUHELIMEESI</p>
+		   <ul class="footervalikko">
+          <li>
+            <a href=""><img src="images/play.png" alt="googleplay"></a>
+          </li>
+          <li>
+            <a href=""><img src="images/appstore.png" alt="googleplay"></a>
+          </li>
+          <li>
+            <a href=""><img src="images/wp.png" alt="googleplay"></a>
+          </li>
+         </ul>
+		 </div>
+		 <div id="footerfooter">
+		 <span id="footerspan">Copyright © 2015 <a href="">Foreca Oy</a></span>
+		 <img id="footerlogo" src="images/forecafooter.png" alt="Foreca">
+		 </div>
+	  </div>
+	</div>
+  </body>
+</html>

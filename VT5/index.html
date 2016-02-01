@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Tietokanta</title>
+<script src="jquery-2.1.3.min.js"></script>
+<script src="jquery-ui.js"></script>
+
+<script src="jquery.metadata.js"></script>
+<script src="jquery.tablesorter.js"></script>
+<script src="koodi.js"></script>
+
+<link href="tyyli.css" rel="StyleSheet" type="text/css" />
+</head>
+ <body>
+ <div id="rekisterointi" class="hidden">
+    <h1>Rekisteröinti</h1>
+    <h2 id="vaarinr" class="hidden">Täytä kaikki kentät</h2>
+    <h2 id="rek" class="hidden">Rekisteröinti onnistui</h2>
+    <form id="form3" method="post">
+   
+        <p>
+         <label for="nimi">Etunimi: </label><input id="nimi" name="nimi" type="text" required>
+      </p>
+       <p>
+         <label for="sukunimi">Sukunimi: </label><input id="sukunimi" name="sukunimi" type="text" required>
+      </p>
+       <p>
+         <label for="uusitunnus">Käyttäjätunnus: </label><input id="uusitunnus" name="uusitunnus" type="text" required>
+      </p>
+       <p>
+         <label for="uusisalasana1">Salasana: </label><input id="uusisalasana1" name="uusisalasana1" type="text" required>
+      </p>
+       <p>
+         <label for="uusisalasana2">Salasana uudestaan: </label><input id="uusisalasana2" name="uusisalasana2" type="text" required>
+      </p>
+       <p>
+         <input type="submit" name="tallennarek" value="Rekisteröidy" id="tallennarek"/>
+         <input type="submit" name="takaisin" value="Takaisin" id="takaisin"/>
+      </p>
+      
+    </form>
+ </div>
+ <div id="kirjaudu" class="hidden">
+    <h1>Kirjautuminen</h1>
+    <h2 id="vaarin" class="hidden">Käyttäjätunnus tai salasana väärin!</h2>
+    <form id="form2" method="post">
+       <p>
+         <label for="tunnus">Käyttäjätunnus: </label><input id="tunnus" name="tunnus" type="text" required>
+      </p>
+       <p>
+         <label for="salasana">Salasana: </label><input id="salasana" name="salasana" type="text" required>
+      </p>
+       <p>
+         <input type="submit" name="kirjaudunappula" value="Kirjaudu!" id="kirjaudunappula"/>
+      </p>
+      
+    </form>
+    <p>
+         <button name="rekisteroi" value="Rekisteröidy" id="rekisteroi">Rekisteröidy</button>
+      </p>
+ </div>
+ <div id="paasivu" class="hidden">
+ <h1>Treenitietokanta</h1>
+ <button id="uloskirjaus">Kirjaudu ulos</button>
+ <h2 id="ilmoitus"></h2>
+ <form id="form" method="post">
+      <p><label for="treenit">Treenityyppi</label>
+      <select id="treenit" name="treenit">
+      </select>
+      </p>
+      <p><label for="lajit">Lajit</label>
+      <select id="lajit" name="lajit">
+      </select>
+      </p>
+      <p>
+         <label for="alkuluku">Alkuaika: </label><input id="alkuluku" name="alkuluku" type="datetime-local" required>
+      </p>
+      <p>
+         <label for="kesto">Kesto: </label><input placeholder="Anna arvo minuuteissa" type="number" name="kesto" id="kesto" required>
+      </p>
+      <p>
+         <label for="km">Kilometrit: </label><input placeholder="Anna arvo kilometreissä" type="number" min="0" name="km" id="km" required>
+      </p>
+      <p>Nopeus: <output id="output"></output></p>
+      <p>
+         <label for="defaultSlider">Keskisyke:</label><input type="range" min="0"  max="200" name="keskisyke" id="defaultSlider"><span id="currentValue">0</span>
+      </p>
+      <p>
+         <label for="sykemax">Maksimisyke:</label><input type="number" min="0" name="sykemax" id="sykemax" required>
+      </p>
+      <p>
+         <label for="kalorit">Kalorit: </label><input type="number" min="0" name="kalorit" id="kalorit" required>
+      </p>
+      <p>
+         <label for="kommentti">Kommentti: </label><input type="text" name="kommentti" id="kommentti" required>
+      </p>
+      <p id="nappula">
+         <input type="submit" name="lisaa" value="Lisää treeni" id="lisaa"/><span id="kuvake"></span>
+      </p>
+        
+
+      
+   </form>
+    <table id="treenilistaus" class="tablesorter">
+    <thead> 
+      <tr> 
+        <th>Nimi</th> 
+        <th>Treenityyppi</th> 
+        <th>Laji</th> 
+        <th class="{sorter: 'text'}">Alkuaika</th> 
+        <th>Kesto</th>
+        <th>Kilometrit</th>
+        <th>Nopeus</th>
+        <th>Keskisyke</th>
+        <th>Maksimisyke</th>
+        <th>Kalorit</th>
+        <th>Kommentti</th>
+        <th>Muokkaa</th>
+        <th>Poista</th>
+        
+      </tr>
+      <tbody id="taulukkorunko">
+         
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+#käsitellään mod_pythonilla .py-tiedostot
+AddHandler mod_python .py
+
+#määrätään käsittelijäksi mod_python.publisher 
+PythonHandler sessions
+PythonHandler autentikointi
+PythonHandler mod_python.publisher
+
+#tulostetaan virheilmoitukset sivulle
+PythonDebug on
+
+#Määrää, että käytetään omaa python-tulkkia tämän .htaccess-tiedoston alikansioissa. 
+#ilman tätä riviä saattavat samalla palvelimella suoritetut mod_python-sovellukset sotkeentua keskenään
+PythonInterpPerDirective On
+
+#Vaihtaa kansion indeksitiedostoksi index.py
+DirectoryIndex index.py

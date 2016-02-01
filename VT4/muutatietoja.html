@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fi" lang="fi">
+<head>
+<title>Tietojen muutos</title>
+<link rel="StyleSheet" href="tyylit.css" type="text/css"/>
+</head>
+<body>
+<ul id="valikko">
+     <li><a href="index.py">Omat treenit</a></li>
+     <li><a href="lisaatreeni.py">Lisää treeni</a></li>
+     <li><a href="kaikkitreenit.py">Kaikki treenit</a></li>
+     <li><a href="ulos.py">Kirjaudu ulos</a></li>
+     
+</ul>
+<h1>Muuta tietoja:</h1>
+<form id="form" action="" method="post">
+   <p>
+        <label for="kauttajatunnus">Uusi käyttäjätunnus: </label><input type="text" name="kayttajatunnus" id="kayttajatunnus"></input>
+      </p>
+      <p>
+         <label for="salasana">Uusi salasana: </label><input type="text" name="salasana" id="salasana"></input>
+      </p>
+      <p>
+         <label for="nimi">Uusi etuniminimi: </label><input type="text" name="nimi" id="nimi"></input>
+      </p>
+      <p>
+         <label for="sukunimi">Uusi sukunimi: </label><input type="text" name="sukunimi" id="sukunimi"></input>
+      </p>
+      <p>
+         <input type="submit" name="muuta" value="Muuta tietoja"></input>
+      </p>
+      <p>
+      Tyhjät ruudut eivät muutu
+      </p>
+</form>
+
+</body>
+</html>

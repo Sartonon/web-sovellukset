@@ -1,0 +1,13 @@
+li {
+    margin-right: 50px;
+}
+
+a {
+    display: block;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}

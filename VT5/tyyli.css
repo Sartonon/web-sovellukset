@@ -1,0 +1,45 @@
+:required {
+ border: 1px solid blue;
+}
+:valid {
+ border: 1px solid silver;
+}
+:invalid {
+ border: 1px solid red;
+}
+
+#ilmoitus {
+   
+}
+
+.red {
+   color: red;
+}
+
+td {
+    padding: 0.3em;
+}
+
+table, th, td {
+   border: 1px solid black;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.hidden {
+   display: none;
+}
+
+h2#vaarin {
+  color: red;
+}
+
+table {
+   margin-top: 20px;
+}
+
+#vaarinr {
+   color: red;
+}

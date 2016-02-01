@@ -1,0 +1,58 @@
+table, th, td {
+    border: 1px solid black;
+    overflow: auto;
+}
+
+
+input {
+  margin-bottom: 10px;
+}
+
+strong {
+   color: red;
+}
+
+select {
+  margin-bottom: 10px;
+}
+
+@media all and (min-width: 300px) {
+    table, th, td {
+    border: 1px solid black;
+}
+
+#taulukko {
+}
+
+table {
+}
+
+form {
+   float: left;
+   border: 1px solid black;
+}
+
+body {
+   min-width: 1150px;
+}
+
+#muok input {
+   width: 80px;
+}
+
+}
+
+.error {
+  border-color: red;
+}
+
+#yhteenveto {
+   float: left;
+}
+
+#myDiv {
+   overflow: auto;
+}
+
+
+

@@ -1,0 +1,12 @@
+[
+   {"key":1, "nimi":"Santeri Rusila", "laji":"Hiihto", "treenityyppi":"Kestävyys", "alkuaika":"2014-03-12", "kesto":"20", "paikka":"Jyväskylä", "kommentti":"Hyvin meni!"},
+   {"key":2, "nimi":"Jonna Sainio", "laji":"Kävely", "treenityyppi":"Nopeus", "alkuaika":"2013-07-13", "kesto":"23", "paikka":"Jyväskylä", "kommentti":"Rakskasta!"},
+   {"key":3, "nimi":"Markus Muranen", "laji":"Golf", "treenityyppi":"Nopeus", "alkuaika":"2015-04-22", "kesto":"30", "paikka":"Muurame", "kommentti":"JES!"},
+   {"key":4, "nimi":"Santeri Rusila", "laji":"Hiihto", "treenityyppi":"Intervalli", "alkuaika":"2015-04-21", "kesto":"12", "paikka":"Kuopio", "kommentti":"Hyvin meni!"},
+   {"key":5, "nimi":"Santeri Rusila", "laji":"Sulkapallo", "treenityyppi":"Kestävyys", "alkuaika":"2015-02-22", "kesto":"67", "paikka":"Jyväskylä", "kommentti":"Hyvin meni!"},
+   {"key":6, "nimi":"Tuuli Laamanen", "laji":"Hiihto", "treenityyppi":"Intervalli", "alkuaika":"2015-01-22", "kesto":"67", "paikka":"Jyväskylä", "kommentti":"Hyvin meni!"},
+   {"key":7, "nimi":"Toni Pitkänen", "laji":"Juoksu", "treenityyppi":"Intervalli", "alkuaika":"2015-01-22", "kesto":"23", "paikka":"Jyväskylä", "kommentti":"Hyvin meni!"},
+   {"key":8, "nimi":"Toni Pitkänen", "laji":"Hiihto", "treenityyppi":"Intervalli", "alkuaika":"2015-04-22", "kesto":"45", "paikka":"Jyväskylä", "kommentti":"Hyvin meni!"},
+   {"key":9, "nimi":"Santeri Rusila", "laji":"Tennis", "treenityyppi":"Nopeus", "alkuaika":"2014-08-04", "kesto":"87", "paikka":"Jyväskylä", "kommentti":"Hyvin meni!"},
+   {"key":10, "nimi":"Jonna Sainio", "laji":"Hiihto", "treenityyppi":"Intervalli", "alkuaika":"2012-09-16", "kesto":"36", "paikka":"Jyväskylä", "kommentti":"Hyvin meni!"}
+]

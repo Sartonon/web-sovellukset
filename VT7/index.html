@@ -1,0 +1,1024 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="dist/react-datepicker.css">
+    <link href="tyyli.css" rel="StyleSheet" type="text/css" />
+    <link rel="stylesheet" href="jqueryui/jquery-ui.css">
+    <script src="jquery-2.1.3.min.js"></script>
+    <script src="moment.js"></script>
+    <script src="jqueryui/jquery-ui.js"></script>
+    <script src="build/react.js"></script>
+    <script src="build/JSXTransformer.js"></script>
+    <script src="dist/react-datepicker.js"></script>
+  </head>
+  <body>
+    <div id="myDiv"></div>
+    <script type="text/jsx">
+
+// Table-komponentti johon sisältyy kaikki muut komponentit    
+var Table = React.createClass({
+    
+    getInitialState: function(){
+     return {
+       items: [],
+       jarjestys: 1,
+       muokattava: []
+     }
+  },
+  
+  componentDidMount: function() {
+    if(!localStorage.getItem('LISTA')) {
+      $.get(this.props.source, function(result) {
+       if (this.isMounted()) {
+         this.setState({
+           items: result
+          });
+          this.jarjestaAlkuaika();
+        }
+      }.bind(this));
+    }
+    else {
+       if (this.isMounted()) {
+          var items = JSON.parse(localStorage.getItem("LISTA"))
+          items.sort(function (a, b) {
+           if (a.alkuaika < b.alkuaika) {
+             return 1;
+           }
+           if (a.alkuaika > b.alkuaika) {
+             return -1;
+           }
+         // a must be equal to b
+           return 0;
+         });
+         this.setState({
+           items: items
+          });
+         
+       }
+    }
+  },
+  
+  handleInsert: function(nimi, laji, treenityyppi, alkuaika, kesto, paikka, kommentti) {
+    this.state.items.sort(function (a, b) {
+      if (a.key > b.key) {
+        return 1;
+      }
+      if (a.key < b.key) {
+        return -1;
+      }
+    // a must be equal to b
+      return 0;
+    });
+    var tavarat = this.state.items;
+    viimeinen = tavarat[tavarat.length-1];
+    if (typeof viimeinen === 'undefined') {
+        var uusi = {"key":1, "nimi": nimi, "laji": laji, "treenityyppi": treenityyppi, "alkuaika": alkuaika, "kesto": kesto, "paikka": paikka, "kommentti": kommentti};
+    }
+    else {   
+       var uusi = {"key":viimeinen.key+1, "nimi": nimi, "laji": laji, "treenityyppi": treenityyppi, "alkuaika": alkuaika, "kesto": kesto, "paikka": paikka, "kommentti": kommentti};
+    }
+    tavarat.push(uusi); 
+    this.setState({items: tavarat});
+    
+    // Päivitetään localStoragee tallennuksen jälkeen
+    var lista = []
+     this.state.items.map(function(item) {
+        lista.push(item);
+     });
+     var lista = JSON.stringify(lista);
+     localStorage.setItem("LISTA", lista);
+    
+  },
+  
+   muutaMuokattava: function(kentta, arvo, key) {
+      // Muutetaan muokattavan treenin arvoja
+      muokattava = this.state.muokattava;
+      // Etsitään mapilla muokattava treeni
+      muokattava.map(function(item) {
+      if (item.key == key) {
+        if (kentta == "nimi") {
+           item.nimi = arvo;
+        }
+        
+        if (kentta == "laji") {
+          item.laji = arvo;
+        }
+        
+        if (kentta == "treenityyppi") {
+          item.treenityyppi = arvo;
+        }
+        
+        if (kentta == "alkuaika") {
+          var splitattu = arvo.split("T");
+          item.alkuaika = splitattu[0];
+        }
+        
+        if (kentta == "paikka") {
+           item.paikka = arvo;
+        }
+        
+        if (kentta == "kommentti") {
+           item.kommentti = arvo;
+        }
+        
+        if (kentta == "kesto" && arvo > -1) {
+           if (arvo == "") item.kesto = 0;
+           else item.kesto = arvo;
+        }
+      }
+      });
+      this.setState({muokattava: muokattava});
+   },
+  
+   haeMuokattavaTreeni: function(key) {
+     self = this;
+     var muokattavat = this.state.muokattava;
+     this.state.items.map(function(item) {
+        if (key == item.key){
+            var muokattava = item;
+            muokattavat.push(muokattava);
+            self.setState({muokattava: muokattavat});
+            return;
+        }
+     });
+  },
+  
+  handleTallennus: function(tallennettavaItem) {
+  self = this;
+     var muokattavat = this.state.muokattava;
+     var muokattava = "";
+     muokattavat.map(function(item) {
+        if (tallennettavaItem == item.key) {
+           if (item.nimi == "") {
+              item.errorNimip = "error";
+              self.setState({muokattava: muokattavat});
+              return;
+           }
+           else {
+             item.errorNimip = "";
+             muokattava = item;
+           }
+        }
+     });
+     if (muokattava == "") {
+         return;
+     }
+     var fList = this.state.muokattava;
+     
+     fList = fList.filter(function(item){
+        return !(item.key == muokattava.key)
+     });
+   
+     this.setState({items: this.state.items, muokattava: fList});
+     // Varmaan 2 turhaa riviä mutta ei uskalla poistaa enää :)
+     this.jarjesta("id");
+     this.setState({items: this.state.items, muokattava: fList});
+     
+     var lista = []
+     this.state.items.map(function(item) {
+        lista.push(item);
+     });
+     var lista = JSON.stringify(lista);
+     localStorage.setItem("LISTA", lista);
+     
+  },
+  
+  jarjestaTaulukko: function() {
+     this.jarjesta();
+     //var fList = this.state.items;
+     if (this.state.jarjestys == 1) this.setState({items: this.state.items, jarjestys: 0});
+     else this.setState({items: this.state.items, jarjestys: 1});
+     
+  },
+  
+  jarjestaNimi: function() {
+     this.jarjesta("nimi");
+     //var fList = this.state.items;
+     if (this.state.jarjestys == 1) this.setState({items: this.state.items, jarjestys: 0});
+     else this.setState({items: this.state.items, jarjestys: 1});
+     
+  },
+  
+  jarjestaTreenityyppi: function() {
+     this.jarjesta("treenityyppi");
+     //var fList = this.state.items;
+     if (this.state.jarjestys == 1) this.setState({items: this.state.items, jarjestys: 0});
+     else this.setState({items: this.state.items, jarjestys: 1});
+     
+  },
+  
+  jarjestaAika : function() {
+     this.jarjesta("aika");
+     //var fList = this.state.items;
+     if (this.state.jarjestys == 1) this.setState({items: this.state.items, jarjestys: 0});
+     else this.setState({items: this.state.items, jarjestys: 1});
+  },
+  
+  jarjestaPaikka: function() {
+     this.jarjesta("paikka");
+     //var fList = this.state.items;
+     if (this.state.jarjestys == 1) this.setState({items: this.state.items, jarjestys: 0});
+     else this.setState({items: this.state.items, jarjestys: 1});
+  },
+  
+  jarjestaAlkuaika: function() {
+     this.jarjesta("alkuaika");
+     //var fList = this.state.items;
+     if (this.state.jarjestys == 1) this.setState({items: this.state.items, jarjestys: 0});
+     else this.setState({items: this.state.items, jarjestys: 1});
+  },
+  
+  jarjestaKommentti: function() {
+     this.jarjesta("kommentti");
+     //var fList = this.state.items;
+     if (this.state.jarjestys == 1) this.setState({items: this.state.items, jarjestys: 0});
+     else this.setState({items: this.state.items, jarjestys: 1});
+  },
+  
+  jarjestaLaji: function() {
+     this.jarjesta("laji");
+     //var fList = this.state.items;
+     if (this.state.jarjestys == 1) this.setState({items: this.state.items, jarjestys: 0});
+     else this.setState({items: this.state.items, jarjestys: 1});
+  },
+  
+  remove : function(key) {  
+     var fList = this.state.items;
+     fList = fList.filter(function(item){
+        return !(item.key == key);
+     });
+     var mList = this.state.muokattava;
+     mList = mList.filter(function(item) {
+        return !(item.key == key);
+     });
+     
+     this.setState({items: fList, muokattava: mList});
+     
+     // POistetaan myös localstoragesta
+     var lista = []
+     fList.map(function(item) {
+        lista.push(item);
+     });
+     var lista = JSON.stringify(lista);
+     localStorage.setItem("LISTA", lista);
+     //localStorage.clear();
+     
+  },
+  // Järjestää taulukon parametrinä tulleen stringin mukaan
+  // Hirveä rimpsu iffiä
+  jarjesta: function(a) {
+  if (a == "id") {
+     this.state.items.sort(function (a, b) {
+      if (a.id > b.id) {
+        return 1;
+      }
+      if (a.id < b.id) {
+        return -1;
+      }
+    // a must be equal to b
+      return 0;
+    });
+    return;
+  }
+  
+  if (a == "nimi") {
+      if (this.state.jarjestys == 1) {
+    this.state.items.sort(function (a, b) {
+      if (a.nimi > b.nimi) {
+        return 1;
+      }
+      if (a.nimi < b.nimi) {
+        return -1;
+      }
+    // a must be equal to b
+      return 0;
+    });
+    return;
+  }
+ 
+  else {
+     this.state.items.sort(function (a, b) {
+      if (a.nimi < b.nimi) {
+        return 1;
+      }
+      if (a.nimi > b.nimi) {
+        return -1;
+      }
+    // a must be equal to b
+      return 0;
+    });
+    return;
+  }
+   }
+   
+   if (a == "kommentti") {
+      if (this.state.jarjestys == 1) {
+    this.state.items.sort(function (a, b) {
+      if (a.kommentti > b.kommentti) {
+        return 1;
+      }
+      if (a.kommentti < b.kommentti) {
+        return -1;
+      }
+    // a must be equal to b
+      return 0;
+    });
+    return;
+  }
+ 
+  else {
+     this.state.items.sort(function (a, b) {
+      if (a.kommentti < b.kommentti) {
+        return 1;
+      }
+      if (a.kommentti > b.kommentti) {
+        return -1;
+      }
+    // a must be equal to b
+      return 0;
+    });
+    return;
+  }
+   }
+   
+   if (a == "paikka") {
+      if (this.state.jarjestys == 1) {
+    this.state.items.sort(function (a, b) {
+      if (a.paikka > b.paikka) {
+        return 1;
+      }
+      if (a.paikka < b.paikka) {
+        return -1;
+      }
+    // a must be equal to b
+      return 0;
+    });
+    return;
+  }
+ 
+  else {
+     this.state.items.sort(function (a, b) {
+      if (a.paikka < b.paikka) {
+        return 1;
+      }
+      if (a.paikka > b.paikka) {
+        return -1;
+      }
+    // a must be equal to b
+      return 0;
+    });
+    return;
+  }
+   }
+   
+   if (a == "aika") {
+      if (this.state.jarjestys == 1) {
+    this.state.items.sort(function (a, b) {
+      if (a.kesto > b.kesto) {
+        return 1;
+      }
+      if (a.kesto < b.kesto) {
+        return -1;
+      }
+    // a must be equal to b
+      return 0;
+    });
+    return;
+  }
+ 
+  else {
+     this.state.items.sort(function (a, b) {
+      if (a.kesto < b.kesto) {
+        return 1;
+      }
+      if (a.kesto > b.kesto) {
+        return -1;
+      }
+    // a must be equal to b
+      return 0;
+    });
+    return;
+  }
+   }
+   
+   if (a == "alkuaika") {
+      if (this.state.jarjestys == 1) {
+    this.state.items.sort(function (a, b) {
+      if (a.alkuaika > b.alkuaika) {
+        return 1;
+      }
+      if (a.alkuaika < b.alkuaika) {
+        return -1;
+      }
+    // a must be equal to b
+      return 0;
+    });
+    return;
+  }
+ 
+  else {
+     this.state.items.sort(function (a, b) {
+      if (a.alkuaika < b.alkuaika) {
+        return 1;
+      }
+      if (a.alkuaika > b.alkuaika) {
+        return -1;
+      }
+    // a must be equal to b
+      return 0;
+    });
+    return;
+  }
+   }
+   
+   if (a == "laji") {
+      if (this.state.jarjestys == 1) {
+    this.state.items.sort(function (a, b) {
+      if (a.laji > b.laji) {
+        return 1;
+      }
+      if (a.laji < b.laji) {
+        return -1;
+      }
+    // a must be equal to b
+      return 0;
+    });
+    return;
+  }
+ 
+  else {
+     this.state.items.sort(function (a, b) {
+      if (a.laji < b.laji) {
+        return 1;
+      }
+      if (a.laji > b.laji) {
+        return -1;
+      }
+    // a must be equal to b
+      return 0;
+    });
+    return;
+  }
+   }
+   
+  if (a == "treenityyppi") {
+      if (this.state.jarjestys == 1) {
+    this.state.items.sort(function (a, b) {
+      if (a.treenityyppi > b.treenityyppi) {
+        return 1;
+      }
+      if (a.treenityyppi < b.treenityyppi) {
+        return -1;
+      }
+    // a must be equal to b
+      return 0;
+    });
+    return;
+  }
+ 
+  else {
+     this.state.items.sort(function (a, b) {
+      if (a.treenityyppi < b.treenityyppi) {
+        return 1;
+      }
+      if (a.treenityyppi > b.treenityyppi) {
+        return -1;
+      }
+    // a must be equal to b
+      return 0;
+    });
+    return;
+  }
+   }
+   
+    if (this.state.jarjestys == 1) {
+    this.state.items.sort(function (a, b) {
+      if (a.alkuaika < b.alkuaika) {
+        return 1;
+      }
+      if (a.alkuaika > b.alkuaika) {
+        return -1;
+      }
+    // a must be equal to b
+      return 0;
+    });
+    return;
+  }
+ },
+  // Hakee muokattavan treenin ja lisää sen muokattavien treenien listaan
+  muokkaaTreenia: function(key) {
+     self = this;
+     var muokattavat = this.state.muokattava;
+     this.state.items.map(function(item) {
+        if (key == item.key){
+            var muokattava = item;
+            muokattavat.push(muokattava);
+            self.setState({muokattava: muokattavat});
+            return;
+        }
+     });
+  },
+  
+ /* handleChangeMuokkaus: function(kentta, arvo) {
+     muokattava = this.state.muokattava;
+     if (kentta == "laji") {
+        muokattava.laji = arvo;
+     }
+     
+     this.setState({muokattava: muokattava});
+  }, */
+  
+  handleClear: function() {
+     localStorage.clear();
+     location.reload();
+  },
+  
+  render: function(){
+  var handler = false;
+  var self = this;
+  var treenit = this.state.items.length;
+  var kesto = 0;
+  this.state.items.map(function(item) {
+      kesto += parseInt(item.kesto);
+  });
+    return (
+      <div>
+      <Form id="lomake" insert={this.handleInsert} muokattava={this.state.muokattava} tallenna={this.handleTallennus} changeMuokattava={this.muutaMuokattava}/>
+      <table id="taulukko">
+      <thead>
+      <th onClick={this.jarjestaNimi} name="nimi">Nimi</th><th onClick={this.jarjestaLaji}>Laji</th>
+      <th onClick={this.jarjestaTreenityyppi}>Treenityyppi</th><th onClick={this.jarjestaAlkuaika}>Alkuaika</th>
+      <th onClick={this.jarjestaAika}>Kesto</th><th onClick={this.jarjestaPaikka}>Paikka</th>
+      <th onClick={this.jarjestaKommentti}>Kommentti</th>
+      <th>Muokkaa</th>
+      <th>Poista</th>
+      </thead>
+      <tbody>
+      {
+        this.state.items.map(function(item) {
+        var key = item.key;
+        var muokkaaHandler = (function(event){
+           self.haeMuokattavaTreeni(key);
+        });
+        
+        var removeHandler = (function(event) {
+           self.remove(key);
+        });
+        
+        var muokkausHandler = (function(event) {
+            self.muokkaaTreenia(key);
+        });
+        
+        var tallennusHandler = (function(event) {
+            self.handleTallennus(key);
+        });
+        
+        if (self.state.muokattava.length == 0){
+           return <tr key={item.key}>
+           <td>{item.nimi}</td>
+           <td>{item.laji}</td><td>{item.treenityyppi}</td>
+           <td>{item.alkuaika}</td><td>{item.kesto}</td>
+           <td>{item.paikka}</td><td>{item.kommentti}</td>
+           <td><button type="button" onClick={muokkausHandler}>Muokkaa</button></td>
+           <td><img src="remove.gif" onClick={removeHandler} /></td>
+           </tr>
+          
+        }
+        else {
+        if (self.state.muokattava.length > 0 ) {
+          for (i = 0; i < self.state.muokattava.length; i++) { 
+             if (key == self.state.muokattava[i].key){
+                var item = self.state.muokattava[i];
+                return  <tr key={item.key} id="muok">
+                  <td><Input id="muok" changeMuokattava={self.muutaMuokattava} error={item.errorNimip} name="nimi" placeholder="Syötä nimi" value={item.nimi} avain={item.key}/></td>
+                  <td><Select changeMuokattava={self.muutaMuokattava} name="laji" source="lajit.json" value={item.laji} avain={item.key}/></td>
+                  <td><Select changeMuokattava={self.muutaMuokattava} name="treenityyppi" source="treenityypit.json" value={item.treenityyppi} avain={item.key}/></td>
+                  <td><DatePickerComponent value={item.alkuaika} changeMuokattava={self.muutaMuokattava} avain={item.key} name="alkuaika"/></td>
+                  <td><Input changeMuokattava={self.muutaMuokattava} type="number" name="kesto" placeholder="Syötä kesto" value={item.kesto} avain={item.key}/></td>
+                  <td><Select changeMuokattava={self.muutaMuokattava} name="paikka" source="paikat.json" value={item.paikka} avain={item.key}/></td>
+                  <td><Input changeMuokattava={self.muutaMuokattava} name="kommentti" placeholder="Syötä kommentti" value={item.kommentti} avain={item.key}/></td>
+                  <td><button type="button" onClick={tallennusHandler}>Tallenna</button></td>
+                  <td><img src="remove.gif" onClick={removeHandler} /></td>
+                  </tr> 
+             }
+             
+          }
+          return <tr key={item.key}>
+            <td>{item.nimi}</td>
+            <td>{item.laji}</td><td>{item.treenityyppi}</td>
+            <td>{item.alkuaika}</td><td>{item.kesto}</td>
+            <td>{item.paikka}</td><td>{item.kommentti}</td>
+            <td><button type="button" onClick={muokkausHandler}>Muokkaa</button></td>
+            <td><img src="remove.gif" onClick={removeHandler} /></td>
+            </tr>
+            
+            }
+        else {
+           return <tr key={item.key}>
+           <td>{item.nimi}</td>
+           <td>{item.laji}</td><td>{item.treenityyppi}</td>
+           <td>{item.alkuaika}</td><td>{item.kesto}</td>
+           <td>{item.paikka}</td><td>{item.kommentti}</td>
+           <td><button type="button" onClick={muokkausHandler}>Muokkaa</button></td>
+           <td><img src="remove.gif" onClick={removeHandler} /></td>
+           </tr>
+        }
+              
+        }
+       })
+      }
+      <tr>
+         <td colSpan="3">Treenien määrä: {treenit}</td>
+         <td colSpan="5">Kokonaiskesto: {kesto}</td>
+      </tr>
+      </tbody>
+      </table>
+      <button onClick={this.handleClear}>Reset Local Storage</button>
+      </div>
+    )  
+  }
+});
+
+// Form-komponentti jolla lisätään talukkoon usia treenejä
+var Form = React.createClass({
+
+  getInitialState: function() {
+    return {
+       id: new Date(),
+       nimi: "",
+       laji: "",
+       treenityyppi: "",
+       alkuaika: "",
+       kesto: 0,
+       paikka: "",
+       kommentti: "",
+       errorAlkuaika: "",
+       errorNimi: "",
+       errorKesto: "",
+       errorNimip: "",
+       errorKestop: "",
+       errorAlkuaikap: ""
+    };
+  },
+  
+  handleInsert: function(event) {
+    event.preventDefault();
+    var virhe = 0;
+    // Virheiden tarkistus kaikille kentille
+    // Jos onko puutteita laitetaan errorAlkuaikap-muuttujaan "error"
+    // joka viedään sitten kyseiselle componentille ja osaa värjätä ympäryksen punaiseksi
+    if ( this.state.alkuaika == '') {
+      this.setState({ errorAlkuaika: 'Syötä alkuaika' });
+      this.setState({ errorAlkuaikap: 'error' });
+      virhe += 1;
+    }
+    else {
+        this.setState({ errorAlkuaika: '' });
+        this.setState({ errorAlkuaikap: '' });
+    }
+    
+    if ( this.state.nimi == '') {
+      this.setState({ errorNimi: 'Syötä nimi!' });
+      this.setState({ errorNimip: 'error' });
+      virhe += 1;
+    }
+    else {
+        this.setState({ errorNimi: '' });
+        this.setState({ errorNimip: '' });
+    }
+    
+    if ( this.state.kesto < 0 || this.state.kesto == "") {
+      this.setState({ errorKesto: 'Anna positiivinen kokonaisluku' });
+      this.setState({ errorKestop: 'error' });
+      virhe += 1;
+    }
+    else {
+        this.setState({ errorKesto: '' });
+        this.setState({ errorKestop: '' });
+    }
+    if (virhe > 0) return;
+    
+    this.setState({ error: '' });
+    // Jos kaikki ok niin lisätään tauluun.
+    this.props.insert(this.state.nimi, this.state.laji, this.state.treenityyppi, this.state.alkuaika,
+                      this.state.kesto, this.state.paikka, this.state.kommentti);
+    this.replaceState(this.getInitialState());
+  },
+  
+  handleChange: function(kentta, arvo, lol) {
+    var newstate = {}; 
+    newstate[kentta] = arvo;
+    this.setState(newstate);
+  },
+  
+  handleDateChange: function(kentta, arvo) {
+    var newstate = {}; 
+    splitattu = arvo.split("T");
+    newstate[kentta] = splitattu[0];
+    this.setState(newstate);
+  },
+  
+  render: function() {
+    self = this;
+     return (
+      <div>
+        <form key={this.state.id}>
+            <Input change={this.handleChange} error={this.state.errorNimip} name="nimi" label="Nimi" placeholder="Syötä nimi"/>{this.state.errorNimi}<br/>
+            <Select change={this.handleChange} name="laji" source="lajit.json" label="Laji" /><br/>
+            <Radio change={this.handleChange}  name="treenityyppi" source="treenityypit.json" label="Treenityyppi" />
+            <strong>{this.state.errorAlkuaika}</strong>
+            <DatePickerComponent label="Alkuaika" change={this.handleDateChange} error={this.state.errorAlkuaikap} name="alkuaika"/>
+            <Input change={this.handleChange} type="number" placeholder="Syötä kesto" error={this.state.errorKestop} name="kesto" label="Kesto" /><strong>{this.state.errorKesto}</strong><br/>
+            <Select change={this.handleChange} name="paikka" source="paikat.json" label="Paikka" /><br/>
+            <Input change={this.handleChange} name="kommentti" label="Kommentti" placeholder="Syötä kommentti"/><br/>
+            <button type="button" onClick={this.handleInsert}>Lisää treeni</button>
+        </form>
+        </div>
+      ) 
+  }
+});
+
+// Select-komponentti formille ja muokkaukseen
+var Select = React.createClass({
+
+  // Määritetään initialStaten nimi sen mukaan mikä on json-tiedoston nimi
+  // Olisi onnistunut tämä varmaa paljon helpomminkin mutta toimii hyvin näinkin
+  getInitialState: function() {
+    if (this.props.source == "lajit.json") {
+      return {
+         lajit: []
+      };
+    }
+    if (this.props.source == "paikat.json") {
+       return {
+         paikat: []
+      };
+    }
+    if (this.props.source == "treenityypit.json") {
+       return {
+         treenityypit: []
+       };
+    }
+  },
+
+  componentDidMount: function() {
+    $.get(this.props.source, function(result) {
+     if (this.isMounted()) {
+       if (this.props.source == "lajit.json") {
+          this.setState({
+            lajit: result
+           });
+           if (typeof this.props.value === "undefined") {
+              this.props.change("laji", this.state.lajit[0].laji);
+           }
+        }
+        if (this.props.source == "paikat.json") {
+           this.setState({
+            paikat: result
+           });
+           if (typeof this.props.value === "undefined") {
+              this.props.change("paikka", this.state.paikat[0].paikka);
+          }
+        }
+        if (this.props.source == "treenityypit.json") {
+          this.setState({
+            treenityypit: result
+           });
+        }
+      }
+    }.bind(this));
+  },
+
+  render: function() {
+    var name = this.props.name; 
+    var handler = this.props.change;
+    var handler2 = this.props.changeMuokattava;
+    var self = this;
+    var avain = this.props.avain;
+    var selectHandler = (function(event){
+            handler(name, event.target.value);
+    });
+    
+    var changeHandler = (function(event){
+            handler2(name, event.target.value, avain);
+    });
+    
+    // kaikille eri sourceille omat tarkistukset onko kyseessä formi vai taulukko
+    if (this.props.source == "lajit.json") {
+       if (typeof self.props.value === "undefined") {
+          return (
+            <label>{this.props.label} 
+            <select name={this.props.name} onChange={selectHandler}>
+              {
+              this.state.lajit.map(function(item) {
+                   return <option key={item.laji} value={item.laji}>{item.laji}</option>
+              })
+              }
+            </select>
+            </label>
+          )
+       }
+       else {
+          return (
+            <label>{this.props.label} 
+            <select name={this.props.name} onChange={changeHandler} value={this.props.value}>
+              {
+              this.state.lajit.map(function(item) {
+                   return <option key={item.laji} value={item.laji}>{item.laji}</option>
+              })
+              }
+            </select>
+            </label>
+          )
+       }
+    }
+    if (this.props.source == "paikat.json") {
+       if (typeof self.props.value === "undefined") {
+          return (
+            <label>{this.props.label} 
+            <select name={this.props.name} onChange={selectHandler}>
+              {
+              this.state.paikat.map(function(item) {
+                   return <option key={item.paikka} value={item.paikka}>{item.paikka}</option>
+              })
+              }
+            </select>
+            </label>
+          )
+       }
+       else {
+          return (
+            <label>{this.props.label} 
+            <select name={this.props.name} onChange={changeHandler} value={this.props.value}>
+              {
+              this.state.paikat.map(function(item) {
+                   return <option key={item.paikka} value={item.paikka}>{item.paikka}</option>
+              })
+              }
+            </select>
+            </label>
+          )
+       }
+    }
+    if (this.props.source == "treenityypit.json") {
+       return (
+            <label>{this.props.label} 
+            <select name={this.props.name} onChange={changeHandler} value={this.props.value}>
+              {
+              this.state.treenityypit.map(function(item) {
+                   return <option key={item.treenityyppi} value={item.treenityyppi}>{item.treenityyppi}</option>
+              })
+              }
+            </select>
+            </label>
+          )
+    }
+        
+  }
+});
+
+// Radiobutton-komponentti formille
+var Radio = React.createClass({
+
+  getInitialState: function() {
+    return {
+       treenityypit: []
+    };
+  },
+
+  componentDidMount: function() {
+    $.get(this.props.source, function(result) {
+     if (this.isMounted()) {
+       this.setState({
+         treenityypit: result
+        });
+        // laitetaan oletuksena ensimmäinen listasta löytyvä alkio valituksi
+        if (typeof self.props.value === "undefined") {
+           this.props.change("treenityyppi", this.state.treenityypit[0].treenityyppi);
+        }
+      }
+    }.bind(this));
+  },
+
+  render: function() {
+    var name = this.props.name; 
+    var handler = this.props.change;
+    var handler2 = this.props.changeMuokattava;
+    var self = this;
+    var selectHandler = (function(event){
+            handler(name, event.target.value);
+    });
+    
+    var changeHandler = (function(event){
+            handler2(name, event.target.value);
+    });
+    
+    return (
+        <div><span>{this.props.label}</span>
+        {
+        this.state.treenityypit.map(function(item) {
+               // Palautetaan sen mukaan ollaanko lisäämässä formilla vai muokkaamassa.
+               if (typeof self.props.value === "undefined") {
+               if (self.state.treenityypit[0] == item)
+                   return <label key={item.treenityyppi}><input defaultChecked={true} type="radio" onChange={selectHandler} name={name} value={item.treenityyppi} />{item.treenityyppi}</label>
+               else
+                   return <label key={item.treenityyppi}><input type="radio" onChange={selectHandler} name={name} value={item.treenityyppi} />{item.treenityyppi}</label>
+               }
+               else {
+                   if (self.props.value == item.treenityyppi){
+                      return <label key={item.treenityyppi}><input checked={true} type="radio" onChange={changeHandler} id={this.props.key} name={name} value={item.treenityyppi} />{item.treenityyppi}</label>
+                   }
+                   else
+                      return <label key={item.treenityyppi}><input type="radio" onChange={changeHandler} name={name} id={this.props.key} value={item.treenityyppi} />{item.treenityyppi}</label>
+               }
+        })
+        }
+        </div>
+    )  
+  }
+});
+
+// Input-komponentti formille
+var Input = React.createClass({
+    render: function() {
+    var name = this.props.name; 
+    var avain = this.props.avain;
+    var handler = this.props.change;
+    var handler2 = this.props.changeMuokattava;
+    var self = this;
+    
+    // Käsittelijä kun ollaan lisäämässä uutta treeniä
+    var selectHandler = (function(event){
+          handler(name, event.target.value);
+    });
+    
+    // Käsittelijä kun ollaan muokkaamassa treeniä tablesta.
+    var changeHandler = (function(event) {
+         handler2(name, event.target.value, avain);
+    });
+   
+    // Tarkistetaan onko Input-komponentti Formilla vai Tablessa muokattavana ja palautetaan sen mukaan
+    if (typeof this.props.value === "undefined") {
+      return (
+        <label>{this.props.label} 
+        <input name={this.props.name} className={this.props.error} type={this.props.type} placeholder={this.props.placeholder} onInput={selectHandler}>
+        </input>
+        </label>
+    )
+    }
+    else {
+      return (
+        <label>{this.props.label} 
+        <input name={this.props.name} className={this.props.error} id={this.props.avain} type={this.props.type} placeholder={this.props.placeholder} onChange={changeHandler} value={this.props.value}>
+        </input>
+        </label>
+    )
+    }
+    
+  }
+});
+
+// Datepicker-komponentti formille
+var DatePickerComponent = React.createClass({
+    getInitialState: function getInitialState() {
+	    return {
+	      start_date: "",
+          avain: this.props.avain
+	    };
+	  },
+    
+     // Hoitaa muutoksen muokattaessa treenin alkuaikaa
+     handleDateChange2: function handleDateChange2(date) {
+       this.setState( {start_date:date });
+       var uusi = moment(date).add(1, 'days');
+        this.props.changeMuokattava("alkuaika", uusi.toISOString(), this.state.avain);
+	  }, 
+    
+     // Hoitaa muutoksen kun ollaan lisäämässä treeniä
+	 handleDateChange: function handleDateChange(date) {
+        this.setState( {start_date:date });
+        this.props.change("alkuaika", date.toISOString());
+	  }, 
+   render: function () {
+        var avain = this.props.avain;
+        var name = this.props.avain;
+        
+        // Tarkistetaan ollaanko lisämässä DatePickerComponenttia formille ja taulukkoon suoraan muokattavaksi.
+        if (typeof this.props.value === "undefined") {
+           var maxdate = moment().add(7, 'days');
+           return ( <div className={this.props.error}><label>{this.props.label}<DatePicker selected={this.state.start_date} onChange={this.handleDateChange}  placeholderText="Valitse päivä" /></label></div> );
+        }
+        else {
+           var day = moment(this.props.value);
+           var maxdate = moment().add(7, 'days');
+           return ( <DatePicker selected={day} onChange={this.handleDateChange2}  placeholderText="Valitse päivä" /> );
+        }
+    }
+});
+
+
+React.render(<Table source="data.json"/>, document.getElementById('myDiv'));
+
+    </script>
+  </body>
+</html>

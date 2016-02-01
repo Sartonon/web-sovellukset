@@ -1,0 +1,59 @@
+{{extend 'layout.html'}}
+{{lol = ""}}
+{{edellinen = ""}}
+{{table = 0}}
+<h2>Treenilistaus</h2>
+{{for treeni in treenit:}}
+   {{if treeni.treenaaja != edellinen:}}
+   {{if table != 0:}}
+      </table>
+   {{pass}}
+   <h1>{{=treenaajat[treeni.id]}}</h1>
+   {{edellinen = treeni.treenaaja}}
+   
+   <!-- Tehdään uusia tauluja eri treenaajille -->
+   <table>
+   {{table = 1}}
+   <tr>
+      <th>Alkuaika</th>
+      <th>Laji</th>
+      <th>Treenityyppi</th>
+      <th>Kesto</th>
+      <th>Kilometrit</th>
+      <th>Keskisyke</th>
+      <th>Maksimisyke</th>
+      <th>Kalorit</th>
+      <th>Kommentti</th>
+   </tr>
+   {{pass}}
+   <tr>
+      <td>{{=treeni.alkuaika}}</td>
+      <td>{{=lajit[treeni.id]}}</td>
+      <td>
+      {{for tyyppi in treenityypit[treeni.id]:}}
+        {{=tyyppi}}
+      {{pass}}</td>
+      <td>{{=treeni.kesto}}</td>
+      <td>{{=treeni.km}}</td>
+      <td>{{=treeni.syke_avg}}</td>
+      <td>{{=treeni.syke_max}}</td>
+      <td>{{=treeni.kalorit}}</td>
+      <td>{{=treeni.kommentti}}</td>
+      {{if user != "":}}
+      <!-- Lisätään muokkaus/poisto-mahdollisuus kirjautuneelle käyttäjälle omiin treeneihin -->
+      {{if user.id == treeni.treenaaja:}}
+         <td>{{=A("Muokkaa" , _href="?id="+str(treeni.id))}}</td>
+      {{pass}}
+      {{pass}}
+   </tr>
+   
+   {{pass}}
+</table>
+{{=lomake}}
+
+      
+ <!--<ul>
+{{for pl in treenit:}}
+{{=LI(A(str(pl.alkuaika) + " / " + str(pl.kesto)))}}
+{{pass}}
+</ul> -->

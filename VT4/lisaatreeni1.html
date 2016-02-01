@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fi" >
+
+<head>
+  <title>Lisää treeni</title>
+  <link href="tyylit.css" rel="StyleSheet" type="text/css" />
+</head>
+
+<body>
+   <ul id="valikko">
+     <li><a href="index.py">Omat treenit</a></li>
+     <li><a href="kaikkitreenit.py">Kaikki treenit</a></li>
+     <li><a href="muutatietoja.py">Muuta tietoja</a></li>
+     <li><a href="ulos.py">Kirjaudu ulos</a></li>
+   </ul>
+   <h1>Lisää treeni</h1>
+   <form id="form" action="" method="post">
+      <p id="treenityypit"><label for="treenit">Treenityyppi</label>
+      <select id="treenit" name="treenit">
+      </select>
+      </p>
+      <p><label for="lajit">Lajit</label>
+      <select id="lajit" name="lajit">
+      </select>
+      </p>
+      <p>
+         <label for="alkuluku">Alkuaika: </label><input type="text" name="alkuluku" id="alkuluku"></input>
+      </p>
+      <p>
+         <label for="kesto">Kesto: </label><input type="text" name="kesto" id="kesto"></input>
+      </p>
+      <p>
+         <label for="km">Kilometrit: </label><input type="text" name="km" id="km"></input>
+      </p>
+      <p>
+         <label for="keskisyke">Keskisyke:</label><input type="text" name="keskisyke" id="keskisyke"></input>
+      </p>
+      <p>
+         <label for="sykemax">Maksimisyke:</label><input type="text" name="sykemax" id="sykemax"></input>
+      </p>
+      <p>
+         <label for="kalorit">Kalorit: </label><input type="text" name="kalorit" id="kalorit"></input>
+      </p>
+      <p>
+         <label for="kommentti">Kommentti: </label><input type="text" name="kommentti" id="kommentti"></input>    
+      </p>
+      <p>
+         <input type="submit" name="lisaa" value="Lisää treeni"></input>
+      </p>
+      <p>
+         <input type="submit" name="poista" value="Poista treenit"></input>
+      </p>
+      
+   </form>
+</body>
+</html>
